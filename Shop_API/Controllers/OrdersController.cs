@@ -32,7 +32,7 @@ namespace Shop_API.Controllers
         {
             try
             {
-                var results = _repository.GetAllOrders(includeItems);
+                var results = await _repository.GetAllOrders(includeItems);
 
                 OrderModel[] allOrders = _mapper.Map<OrderModel[]>(results);
 
