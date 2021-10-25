@@ -15,7 +15,8 @@ namespace Shop_API.Data
         {
             this.CreateMap<OrderModel, Order>()
                 .ForMember(o => o.Id, ex => ex.MapFrom(o => o.OrderId))
-                .ReverseMap();
+                .ReverseMap()
+                .ForAllMembers(opt => opt.Condition(src => src != null));
 
             this.CreateMap<OrderItem, OrderItemModel>()
                 .ReverseMap();
