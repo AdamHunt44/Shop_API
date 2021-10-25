@@ -8,8 +8,8 @@ using Shop_API.Data;
 
 namespace Shop_API.Migrations
 {
-    [DbContext(typeof(ProductContext))]
-    partial class ProductContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ShopContext))]
+    partial class ShopContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -30,7 +30,6 @@ namespace Shop_API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OrderNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -45,7 +44,7 @@ namespace Shop_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProductId")
@@ -55,7 +54,8 @@ namespace Shop_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 3)
+                        .HasColumnType("decimal(10,3)");
 
                     b.HasKey("Id");
 
@@ -77,7 +77,6 @@ namespace Shop_API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
@@ -93,11 +92,11 @@ namespace Shop_API.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = 3,
-                            Description = "A new test product for our users",
-                            Name = "TEST",
-                            Price = 3.5,
-                            Quantity = 50
+                            ProductId = 1,
+                            Description = "Tall blue coffee mug",
+                            Name = "Coffee mug",
+                            Price = 3.9900000000000002,
+                            Quantity = 1
                         });
                 });
 
@@ -105,9 +104,7 @@ namespace Shop_API.Migrations
                 {
                     b.HasOne("Shop_API.Data.Entities.Order", "Order")
                         .WithMany("Items")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("Shop_API.Data.Entities.Product", "Product")
                         .WithMany()

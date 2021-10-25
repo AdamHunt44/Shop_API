@@ -2,19 +2,17 @@
 using Microsoft.Extensions.Logging;
 using Shop_API.Data.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop_API.Data
+namespace Shop_API.Data.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly ProductContext _context;
+        private readonly ShopContext _context;
         private readonly ILogger<OrderRepository> _logger;
 
-        public OrderRepository(ProductContext context, ILogger<OrderRepository> logger)
+        public OrderRepository(ShopContext context, ILogger<OrderRepository> logger)
         {
             _context = context;
             _logger = logger;
@@ -36,7 +34,7 @@ namespace Shop_API.Data
             return (await _context.SaveChangesAsync()) > 0;
         }
 
-        public async Task<Order[]> GetAllOrders(bool includeItems)
+        public async Task<Order[]> GetAllOrdersAsync(bool includeItems)
         {
             IQueryable<Order> query = _context.Orders;
 
@@ -55,7 +53,5 @@ namespace Shop_API.Data
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

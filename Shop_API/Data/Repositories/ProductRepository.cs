@@ -1,20 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Shop_API.Data.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop_API.Data
+namespace Shop_API.Data.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly ProductContext _context;
+        private readonly ShopContext _context;
         private readonly ILogger<ProductRepository> _logger;
 
-        public ProductRepository(ProductContext context, ILogger<ProductRepository> logger)
+        public ProductRepository(ShopContext context, ILogger<ProductRepository> logger)
         {
             _context = context;
             _logger = logger;
@@ -35,7 +32,7 @@ namespace Shop_API.Data
             // Only returns success if at least one row was changed in the database
             return (await _context.SaveChangesAsync()) > 0;
         }
-            
+
         public async Task<Product[]> GetAllProductsAsync()
         {
             IQueryable<Product> query = _context.Products;
@@ -46,7 +43,7 @@ namespace Shop_API.Data
             return await query.ToArrayAsync();
         }
 
-        public async Task<Product[]> GetAllProductsByPrice()
+        public async Task<Product[]> GetAllProductsByPriceAsync()
         {
             IQueryable<Product> query = _context.Products;
 
@@ -56,7 +53,7 @@ namespace Shop_API.Data
             return await query.ToArrayAsync();
         }
 
-        public async Task<Product> GetProductById(int productId)
+        public async Task<Product> GetProductByIdAsync(int productId)
         {
             IQueryable<Product> query = _context.Products;
 

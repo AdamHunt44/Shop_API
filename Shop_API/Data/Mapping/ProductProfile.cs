@@ -1,12 +1,7 @@
-﻿using Shop_API.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Shop_API.Data.Entities;
 
-namespace Shop_API.Model
+namespace Shop_API.Model.Mapping
 {
     public class ProductProfile : Profile
     {
