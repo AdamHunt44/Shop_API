@@ -6,9 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Data\Migrations\AddCategoryToProductsMigration.cs" />
     <Compile Remove="Data\Migrations\InitialiseDB.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\Migrations\AddCategoryToProductsMigration.cs" />
     <None Include="Data\Migrations\InitialiseDB.cs" />
   </ItemGroup>
   <ItemGroup>
