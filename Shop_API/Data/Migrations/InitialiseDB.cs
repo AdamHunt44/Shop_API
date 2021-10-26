@@ -52,7 +52,7 @@ namespace Shop_API.Data.Migrations
                                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                    ProductId = table.Column<int>(nullable: true),
                    Quantity = table.Column<int>(nullable: false),
-                   UnitPrice = table.Column<decimal>(nullable: false),
+                   UnitPrice = table.Column<decimal>(type: "money", nullable: false),
                    OrderId = table.Column<int>(nullable: true),
                 },
                constraints: table =>
