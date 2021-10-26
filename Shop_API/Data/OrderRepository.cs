@@ -41,11 +41,6 @@ namespace Shop_API.Data
             IQueryable<Order> query = _context.Orders;
 
             // Order the Query
-            if (includeItems)
-            {
-                query = query
-                    .Include(c => c.Items);
-            }
             query = query.OrderBy(c => c.Id);
 
             return await query.ToArrayAsync();

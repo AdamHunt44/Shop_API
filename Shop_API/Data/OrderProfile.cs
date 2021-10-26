@@ -13,10 +13,9 @@ namespace Shop_API.Data
     {
         public OrderProfile()
         {
-            this.CreateMap<OrderModel, Order>()
-                .ForMember(o => o.Id, ex => ex.MapFrom(o => o.OrderId))
-                .ReverseMap()
-                .ForAllMembers(opt => opt.Condition(src => src != null));
+            this.CreateMap<Order, OrderModel>()
+                .ForMember(o => o.OrderId, ex => ex.MapFrom(o => o.Id))
+                .ReverseMap();
 
             this.CreateMap<OrderItem, OrderItemModel>()
                 .ReverseMap();

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Shop_API.Data;
+using Shop_API.Data.Entities;
 using Shop_API.Model;
 using System;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 namespace Shop_API.Controllers
 {
     [Route("api/[controller]/")]
+    [ApiController]
     public class OrdersController : Controller
     {
         private readonly IOrderRepository _repository;
@@ -57,7 +60,33 @@ namespace Shop_API.Controllers
                 return BadRequest($"Database Fatal Error: {ex}");
             }
         }
+
+
+        [HttpPost]
+        public async Task<ActionResult<OrderModel>> CreateNewOrder(Order orderModel)
+        {
+            try
+            {
+                var existing = await _repository.GetOrderById(orderModel.Id);
+                if (existing != null)
+                {
+                    return BadRequest("Product with the same name already exists");
+                }
+
+                // Creating a new Order
+                var newOrder = _mapper.Map<Order>(orderModel);
+                _repository.Add(newOrder);
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Created($"/api/products/{orderModel.OrderNumber}", _mapper.Map<OrderModel>(newOrder));
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Database Fatal Error: {ex}");
+            }
+            return BadRequest();
+        }
     }
-
-
 }
