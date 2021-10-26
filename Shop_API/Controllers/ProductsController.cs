@@ -77,7 +77,7 @@ namespace Shop_API.Controllers
             }
         }
 
-        [HttpGet("cat/{category}")]
+        [HttpGet("category/{category}")]
         public async Task<ActionResult<ProductModel>> GetProductByCategory(string category)
         {
             try
@@ -85,7 +85,9 @@ namespace Shop_API.Controllers
                 var result = await _repository.GetProductsByCategory(category);
                 if (result == null) return NotFound();
 
-                return _mapper.Map<ProductModel>(result);
+
+                ProductModel[] categoryProducts = _mapper.Map<ProductModel[]>(result);
+                return Ok(categoryProducts);
             }
             catch (Exception ex)
             {
