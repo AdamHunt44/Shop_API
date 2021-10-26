@@ -43,14 +43,14 @@ namespace Shop_API.Controllers
         }
 
         [HttpGet("{orderId:int}")]
-        public async Task<ActionResult<ProductModel>> GetOrderById(int orderId)
+        public async Task<ActionResult<OrderModel>> GetOrderById(int orderId)
         {
             try
             {
                 var result = await _repository.GetOrderById(orderId);
                 if (result == null) return NotFound();
 
-                return _mapper.Map<ProductModel>(result);
+                return _mapper.Map<OrderModel>(result);
             }
             catch (Exception ex)
             {

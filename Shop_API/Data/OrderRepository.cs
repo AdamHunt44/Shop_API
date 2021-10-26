@@ -56,9 +56,13 @@ namespace Shop_API.Data
             throw new NotImplementedException();
         }
 
-        public Task<Order> GetOrderById(int orderId)
+        public async Task<Order> GetOrderById(int orderId)
         {
-            throw new NotImplementedException();
+            IQueryable<Order> query = _context.Orders;
+
+            query = query.Where(o => o.Id == orderId);
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }
