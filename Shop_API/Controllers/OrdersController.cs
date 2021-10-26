@@ -44,6 +44,22 @@ namespace Shop_API.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpGet("{orderId:int}")]
+        public async Task<ActionResult<ProductModel>> GetOrderById(int orderId)
+        {
+            try
+            {
+                var result = await _repository.GetOrderById(orderId);
+                if (result == null) return NotFound();
+
+                return _mapper.Map<ProductModel>(result);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Database Fatal Error: {ex}");
+            }
+        }
     }
 
     

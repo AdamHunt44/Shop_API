@@ -56,6 +56,9 @@ namespace Shop_API.Data
             throw new NotImplementedException();
         }
 
-
+        public Task<Order> GetOrderById(int orderId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
