@@ -13,6 +13,7 @@ namespace Shop_API.Data
         // Orders
         Task<Order[]> GetAllOrders(bool includeItems);
         Task<Order> GetOrderById(int orderId);
+        Task<Order> GetOrderByOrderNumber(string orderNumber);
 
 
         // Order Items

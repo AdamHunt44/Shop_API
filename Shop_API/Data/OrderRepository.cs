@@ -59,5 +59,14 @@ namespace Shop_API.Data
 
             return await query.FirstOrDefaultAsync();
         }
+
+        public async Task<Order> GetOrderByOrderNumber(string orderNumber)
+        {
+            IQueryable<Order> query = _context.Orders;
+
+            query = query.Where(o => o.OrderNumber == orderNumber);
+
+            return await query.FirstOrDefaultAsync();
+        }
     }
 }
