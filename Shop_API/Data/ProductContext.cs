@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Shop_API.Data.Entities;
-using System;
-using Shop_API.Data.Entities;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop_API.Data
 {
@@ -21,6 +15,7 @@ namespace Shop_API.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,14 +38,6 @@ namespace Shop_API.Data
             bldr.Entity<OrderItem>()
                 .Property(p => p.UnitPrice)
                 .HasColumnType("decimal(18,4)");
-
-            /*            bldr.Entity<Order>()
-                            .HasData(new Order
-                            {
-                                Id = 1,
-                                OrderDate = DateTime.UtcNow,
-                                OrderNumber = "12345"
-                            });*/
         }
     }
 }
