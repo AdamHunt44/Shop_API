@@ -88,5 +88,30 @@ namespace Shop_API.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPut("{orderNumber}")]
+        public async Task<ActionResult<ProductModel>> UpdateOrderByOrderNumber(string orderNumber, OrderModel orderModel)
+        {
+            try
+            {
+                var selectedProduct = await _repository.GetOrderByOrderNumber(orderNumber);
+                if (selectedProduct == null) return NotFound($"Could not find a Order with the corresponding number: {orderNumber}");
+
+                _mapper.Map(orderModel, selectedProduct);
+
+                if (await _repository.SaveChangesAsync())
+                {
+                    return _mapper.Map<ProductModel>(selectedProduct);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Database Fatal Error: {ex}");
+            }
+
+            return BadRequest();
+        }
     }
 }
