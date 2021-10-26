@@ -22,7 +22,6 @@ namespace Shop_API
         {
             services.AddDbContext<ProductContext>();
             services.AddScoped<IProductRepository, ProductRepository>();
-          //  services.AddDbContext<OrderContext>();
             services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
