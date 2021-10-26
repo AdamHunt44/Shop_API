@@ -36,16 +36,21 @@ namespace Shop_API.Data
                     Name = "TEST2",
                     Price = 3.50,
                     Description = "A new test product for our users",
-                    Quantity = 50
+                    Quantity = 50,
+                    Category = "TEST"
                 });
 
-/*            bldr.Entity<Order>()
-                .HasData(new Order
-                {
-                    Id = 1,
-                    OrderDate = DateTime.UtcNow,
-                    OrderNumber = "12345"
-                });*/
+            bldr.Entity<OrderItem>()
+                .Property(p => p.UnitPrice)
+                .HasColumnType("decimal(18,4)");
+
+            /*            bldr.Entity<Order>()
+                            .HasData(new Order
+                            {
+                                Id = 1,
+                                OrderDate = DateTime.UtcNow,
+                                OrderNumber = "12345"
+                            });*/
         }
     }
 }

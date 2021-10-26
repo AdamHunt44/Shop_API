@@ -46,12 +46,12 @@ namespace Shop_API.Data
             return await query.ToArrayAsync();
         }
 
-        public async Task<Product[]> GetAllProductsByPrice()
+        public async Task<Product[]> GetProductsByCategory(string category)
         {
             IQueryable<Product> query = _context.Products;
 
             // Order the Query
-            query = query.OrderByDescending(c => c.Price);
+            query = query.Where(c => c.Category == category);
 
             return await query.ToArrayAsync();
         }

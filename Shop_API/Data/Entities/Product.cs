@@ -13,5 +13,6 @@ namespace Shop_API.Data.Entities
         public double Price { get; set; }
         public string? Description { get; set; }
         public int Quantity { get; set; }
+        public string Category { get; set; }
     }
 }

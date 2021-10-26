@@ -1,4 +1,6 @@
-﻿using Shop_API.Data.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using Shop_API.Data.Entities;
+using Shop_API.Model;
 using System;
 using System.Threading.Tasks;
 
@@ -14,7 +16,7 @@ namespace Shop_API.Data
         // Products
         Task<Product[]> GetAllProductsAsync();
         Task<Product> GetProductAsync(string productName);
-        Task<Product[]> GetAllProductsByPrice();
+        Task<Product[]> GetProductsByCategory(string category);
         Task<Product> GetProductById(int productId);
     }
 }

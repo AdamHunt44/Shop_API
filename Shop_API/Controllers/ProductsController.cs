@@ -77,6 +77,23 @@ namespace Shop_API.Controllers
             }
         }
 
+        [HttpGet("cat/{category}")]
+        public async Task<ActionResult<ProductModel>> GetProductByCategory(string category)
+        {
+            try
+            {
+                var result = await _repository.GetProductsByCategory(category);
+                if (result == null) return NotFound();
+
+                return _mapper.Map<ProductModel>(result);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Database Fatal Error: {ex}");
+            }
+        }
+
+
         [HttpPost]
         public async Task<ActionResult<ProductModel>> CreateNewProduct(ProductModel productModel)
         {
