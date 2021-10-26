@@ -4,9 +4,6 @@ using Microsoft.Extensions.Logging;
 using Shop_API.Data;
 using Shop_API.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Shop_API.Controllers
@@ -57,10 +54,10 @@ namespace Shop_API.Controllers
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Database Fatal Error: {ex}");
+                return BadRequest($"Database Fatal Error: {ex}");
             }
         }
     }
 
-    
+
 }
