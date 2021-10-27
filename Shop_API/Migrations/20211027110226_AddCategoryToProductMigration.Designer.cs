@@ -10,8 +10,8 @@ using Shop_API.Data;
 namespace Shop_API.Migrations
 {
     [DbContext(typeof(ProductContext))]
-    [Migration("20211026092032_AddCategoryToProductMigration.cs")]
-    partial class AddCategoryToProductMigrationcs
+    [Migration("20211027110226_AddCategoryToProductMigration")]
+    partial class AddCategoryToProductMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,6 @@ namespace Shop_API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OrderNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -47,7 +46,7 @@ namespace Shop_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProductId")
@@ -57,7 +56,7 @@ namespace Shop_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
 
@@ -65,7 +64,7 @@ namespace Shop_API.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Shop_API.Data.Entities.Product", b =>
@@ -76,14 +75,12 @@ namespace Shop_API.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Category")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
@@ -112,9 +109,7 @@ namespace Shop_API.Migrations
                 {
                     b.HasOne("Shop_API.Data.Entities.Order", "Order")
                         .WithMany("Items")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("Shop_API.Data.Entities.Product", "Product")
                         .WithMany()
