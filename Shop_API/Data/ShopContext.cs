@@ -14,8 +14,8 @@ namespace Shop_API.Data
         }
 
         public DbSet<Product> Products { get; set; }
-
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> Items { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
