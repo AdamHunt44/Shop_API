@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Shop_API.Data.Entities;
-using System.Collections.Generic;
+using System;
 
 namespace Shop_API.Data
 {
@@ -15,7 +15,9 @@ namespace Shop_API.Data
         }
 
         public DbSet<Product> Products { get; set; }
+
         public DbSet<Order> Orders { get; set; }
+
         public DbSet<OrderItem> Items { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -25,33 +27,26 @@ namespace Shop_API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Explicit database types.
             modelBuilder.Entity<OrderItem>()
                 .Property(m => m.UnitPrice)
                 .HasPrecision(10, 3);
 
-            var productA = new Product
-            {
-                ProductId = 1,
-                Name = "Coffee mug",
-                Price = 3.99m,
-                Description = "Tall blue coffee mug",
-                Quantity = 10,
-                Category = "Kitchen"
-            };
-
-            var productC = new Product
-            {
-            ProductId = 3,
-                Name = "Kettle",
-                Price = 13.99m,
-                Description = "A proper brew",
-                Quantity = 10,
-                Category = "Kitchen"
-            };
-
-
             modelBuilder.Entity<Product>()
-                .HasData(productA);
+                .Property(m => m.Price)
+                .HasPrecision(10, 3);
+
+            // Seed data.
+            modelBuilder.Entity<Product>()
+                .HasData(new Product
+                {
+                    ProductId = 1,
+                    Name = "Coffee mug",
+                    Price = 3.99m,
+                    Description = "Tall blue coffee mug",
+                    Quantity = 10,
+                    Category = "Kitchen"
+                });
 
             modelBuilder.Entity<Product>()
                 .HasData(new Product
@@ -65,32 +60,43 @@ namespace Shop_API.Data
                 });
 
             modelBuilder.Entity<Product>()
-                .HasData(productC);
+                .HasData(new Product
+                {
+                    ProductId = 3,
+                    Name = "Kettle",
+                    Price = 13.99m,
+                    Description = "A proper brew",
+                    Quantity = 10,
+                    Category = "Kitchen"
+                });
 
-            modelBuilder.Entity<Order>(o => o.HasData (new Order
+            modelBuilder.Entity<Order>()
+                .HasData(new Order
                 {
                     Id = 1,
-                    OrderDate = System.DateTime.Today,
-                    OrderNumber = "1234",
-                    Items = new List<OrderItem>()
-                    {
-                        new OrderItem()
-                        {
-                            Id = 1,
-                            Product = productA,
-                            Quantity = 5,
-                            UnitPrice = productA.Price,
-                        },
-                        
-                        new OrderItem()
-                        {
-                            Id = 2,
-                            Product = productC,
-                            Quantity = 5,
-                            UnitPrice = productC.Price,
-                        }
-                    }
-                }));
+                    OrderDate = DateTime.Today,
+                    OrderNumber = "1234"
+                });
+
+            modelBuilder.Entity<OrderItem>()
+                .HasData(new OrderItem
+                {
+                    Id = 1,
+                    OrderId = 1,
+                    ProductId = 1,
+                    Quantity = 5,
+                    UnitPrice = 3.99m
+                });
+
+            modelBuilder.Entity<OrderItem>()
+                .HasData(new OrderItem
+                {
+                    Id = 2,
+                    OrderId = 1,
+                    ProductId = 3,
+                    Quantity = 5,
+                    UnitPrice = 13.99m
+                });
 
             base.OnModelCreating(modelBuilder);
         }

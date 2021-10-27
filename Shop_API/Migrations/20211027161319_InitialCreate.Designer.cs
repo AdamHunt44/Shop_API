@@ -10,8 +10,8 @@ using Shop_API.Data;
 namespace Shop_API.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20211025162238_SeedData")]
-    partial class SeedData
+    [Migration("20211027161319_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,10 +46,10 @@ namespace Shop_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -65,7 +65,7 @@ namespace Shop_API.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("Shop_API.Data.Entities.Product", b =>
@@ -75,14 +75,18 @@ namespace Shop_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasPrecision(10, 3)
+                        .HasColumnType("decimal(10,3)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -90,27 +94,21 @@ namespace Shop_API.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 1,
-                            Description = "Tall blue coffee mug",
-                            Name = "Coffee mug",
-                            Price = 3.9900000000000002,
-                            Quantity = 1
-                        });
                 });
 
             modelBuilder.Entity("Shop_API.Data.Entities.OrderItem", b =>
                 {
                     b.HasOne("Shop_API.Data.Entities.Order", "Order")
                         .WithMany("Items")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Shop_API.Data.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
 

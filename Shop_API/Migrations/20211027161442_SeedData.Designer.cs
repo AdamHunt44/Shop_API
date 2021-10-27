@@ -10,8 +10,8 @@ using Shop_API.Data;
 namespace Shop_API.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20211025160455_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211027161442_SeedData")]
+    partial class SeedData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,14 @@ namespace Shop_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            OrderDate = new DateTime(2021, 10, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            OrderNumber = "1234"
+                        });
                 });
 
             modelBuilder.Entity("Shop_API.Data.Entities.OrderItem", b =>
@@ -46,10 +54,10 @@ namespace Shop_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -65,7 +73,25 @@ namespace Shop_API.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("Items");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            OrderId = 1,
+                            ProductId = 1,
+                            Quantity = 5,
+                            UnitPrice = 3.99m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            OrderId = 1,
+                            ProductId = 3,
+                            Quantity = 5,
+                            UnitPrice = 13.99m
+                        });
                 });
 
             modelBuilder.Entity("Shop_API.Data.Entities.Product", b =>
@@ -75,14 +101,18 @@ namespace Shop_API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasPrecision(10, 3)
+                        .HasColumnType("decimal(10,3)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -90,17 +120,50 @@ namespace Shop_API.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            Category = "Kitchen",
+                            Description = "Tall blue coffee mug",
+                            Name = "Coffee mug",
+                            Price = 3.99m,
+                            Quantity = 10
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            Category = "Tools",
+                            Description = "A heavy duty aluminium step ladder",
+                            Name = "Step Ladder",
+                            Price = 27.99m,
+                            Quantity = 10
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            Category = "Kitchen",
+                            Description = "A proper brew",
+                            Name = "Kettle",
+                            Price = 13.99m,
+                            Quantity = 10
+                        });
                 });
 
             modelBuilder.Entity("Shop_API.Data.Entities.OrderItem", b =>
                 {
                     b.HasOne("Shop_API.Data.Entities.Order", "Order")
                         .WithMany("Items")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Shop_API.Data.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
 
