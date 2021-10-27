@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shop_API.Data;
-using Shop_API.Data.Repositories;
 using System.Reflection;
 
 namespace Shop_API
