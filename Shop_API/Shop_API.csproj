@@ -3,7 +3,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <Version>1.0.1</Version>
     <UserSecretsId>e016e181-4cec-4a3b-90aa-5264a228c0bf</UserSecretsId>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Data\Migrations\AddCategoryToProductsMigration.cs" />
