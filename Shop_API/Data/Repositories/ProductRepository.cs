@@ -11,10 +11,10 @@ namespace Shop_API.Data
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly ProductContext _context;
+        private readonly ShopContext _context;
         private readonly ILogger<ProductRepository> _logger;
 
-        public ProductRepository(ProductContext context, ILogger<ProductRepository> logger)
+        public ProductRepository(ShopContext context, ILogger<ProductRepository> logger)
         {
             _context = context;
             _logger = logger;
@@ -56,7 +56,7 @@ namespace Shop_API.Data
             return await query.ToArrayAsync();
         }
 
-        public async Task<Product> GetProductById(int productId)
+        public async Task<Product> GetProductByIdAsync(int productId)
         {
             IQueryable<Product> query = _context.Products;
 

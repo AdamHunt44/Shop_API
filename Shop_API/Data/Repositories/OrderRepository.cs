@@ -11,10 +11,10 @@ namespace Shop_API.Data
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly ProductContext _context;
+        private readonly ShopContext _context;
         private readonly ILogger<OrderRepository> _logger;
 
-        public OrderRepository(ProductContext context, ILogger<OrderRepository> logger)
+        public OrderRepository(ShopContext context, ILogger<OrderRepository> logger)
         {
             _context = context;
             _logger = logger;

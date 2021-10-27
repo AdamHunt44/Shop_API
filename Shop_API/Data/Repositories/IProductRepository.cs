@@ -17,6 +17,6 @@ namespace Shop_API.Data
         Task<Product[]> GetAllProductsAsync();
         Task<Product> GetProductAsync(string productName);
         Task<Product[]> GetProductsByCategory(string category);
-        Task<Product> GetProductById(int productId);
+        Task<Product> GetProductByIdAsync(int productId);
     }
 }
