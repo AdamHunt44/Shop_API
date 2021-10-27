@@ -1,17 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Shop_API.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+using Shop_API.Data.Repositories;
 using System.Reflection;
 
 namespace Shop_API
@@ -20,7 +13,8 @@ namespace Shop_API
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ProductContext>();
+            services.AddDbContext<ShopContext>();
+
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
 
@@ -40,7 +34,8 @@ namespace Shop_API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(setupAction => {
+                app.UseSwaggerUI(setupAction =>
+                {
                     setupAction.SwaggerEndpoint("/swagger/v1/swagger.json",
                         "Shop_API v1");
                 });

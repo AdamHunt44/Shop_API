@@ -2,24 +2,21 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Shop_API.Data;
 using Shop_API.Data.Entities;
+using Shop_API.Data.Repositories;
 using Shop_API.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Shop_API.Controllers
 {
-    [Route("api/[controller]/")]
+    [Route("api/products")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository _repository;
+        private readonly ILogger<ProductsController> _logger;
         private readonly IMapper _mapper;
-        public readonly ILogger<ProductsController> _logger;
 
         public ProductsController(IProductRepository repository, ILogger<ProductsController> logger, IMapper mapper)
         {
@@ -66,7 +63,7 @@ namespace Shop_API.Controllers
         {
             try
             {
-                var result = await _repository.GetProductById(productId);
+                var result = await _repository.GetProductByIdAsync(productId);
                 if (result == null) return NotFound();
 
                 return _mapper.Map<ProductModel>(result);
@@ -117,9 +114,9 @@ namespace Shop_API.Controllers
             }
             catch (Exception ex)
             {
-
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Database Fatal Error: {ex}");
             }
+
             return BadRequest();
         }
 
@@ -137,11 +134,9 @@ namespace Shop_API.Controllers
                 {
                     return _mapper.Map<ProductModel>(selectedProduct);
                 }
-
             }
             catch (Exception ex)
             {
-
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Database Fatal Error: {ex}");
             }
 
@@ -164,7 +159,6 @@ namespace Shop_API.Controllers
             }
             catch (Exception ex)
             {
-
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Database Fatal Error: {ex}");
             }
 
