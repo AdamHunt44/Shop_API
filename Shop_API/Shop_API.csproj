@@ -6,14 +6,6 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Data\Migrations\AddCategoryToProductsMigration.cs" />
-    <Compile Remove="Data\Migrations\InitialiseDB.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Data\Migrations\AddCategoryToProductsMigration.cs" />
-    <None Include="Data\Migrations\InitialiseDB.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
