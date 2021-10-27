@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Shop_API.Data;
 using Shop_API.Data.Entities;
-using Shop_API.Data.Repositories;
 using Shop_API.Model;
 using System;
 using System.Threading.Tasks;
 
 namespace Shop_API.Controllers
 {
-    [Route("api/products")]
+    [Route("api/[controller]/")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
