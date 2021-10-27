@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Shop_API.Data.Repositories;
+using Shop_API.Data;
 
 namespace Shop_API.Controllers
 {
@@ -9,11 +9,11 @@ namespace Shop_API.Controllers
     [ApiController]
     public class OrderItemsController : ControllerBase
     {
-        private readonly IProductRepository _repository;
+        private readonly IOrderRepository _repository;
         private readonly ILogger<OrderItemsController> _logger;
         private readonly IMapper _mapper;
 
-        public OrderItemsController(IProductRepository repository, ILogger<OrderItemsController> logger, IMapper mapper)
+        public OrderItemsController(IOrderRepository repository, ILogger<OrderItemsController> logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
