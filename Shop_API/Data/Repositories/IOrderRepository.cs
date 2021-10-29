@@ -17,5 +17,7 @@ namespace Shop_API.Data
 
         // Order Items
         Task<OrderItem[]> GetAllOrderItemsAsync();
+        Task<OrderItem> GetOrderItemById(int orderItemId);
+        Task<OrderItem[]> GetAllItemsByOrderId(int orderId);
     }
 }
