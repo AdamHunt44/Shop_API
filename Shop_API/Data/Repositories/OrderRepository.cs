@@ -46,9 +46,14 @@ namespace Shop_API.Data
             return await query.ToArrayAsync();
         }
 
-        public Task<OrderItem[]> GetAllOrderItemsAsync()
+        public async Task<OrderItem[]> GetAllOrderItemsAsync()
         {
-            throw new NotImplementedException();
+            IQueryable<OrderItem> query = _context.Items;
+
+            // Order the Query
+            query = query.OrderBy(c => c.Id);
+
+            return await query.ToArrayAsync();
         }
 
         public async Task<Order> GetOrderById(int orderId)
@@ -56,6 +61,7 @@ namespace Shop_API.Data
             IQueryable<Order> query = _context.Orders;
 
             query = query.Where(o => o.Id == orderId);
+            query = query.Include(o => o.Items);
 
             return await query.FirstOrDefaultAsync();
         }
@@ -65,6 +71,17 @@ namespace Shop_API.Data
             IQueryable<Order> query = _context.Orders;
 
             query = query.Where(o => o.OrderNumber == orderNumber);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<OrderItem> GetOrderItemById(int orderItemId)
+        {
+            IQueryable<OrderItem> query = _context.Items;
+
+            // Order the Query
+            query = query.OrderBy(c => c.Id)
+                .Where(i => i.OrderId == orderItemId);
 
             return await query.FirstOrDefaultAsync();
         }
