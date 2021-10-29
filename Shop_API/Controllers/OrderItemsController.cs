@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Shop_API.Controllers
 {
     [Route("/api/orders/{orderid}/items")]
+    [Route("/api/items/{itemId}")]
     [Route("/api/items")]
     [ApiController]
     public class OrderItemsController : ControllerBase
@@ -34,6 +35,24 @@ namespace Shop_API.Controllers
                 OrderItemModel[] allOrderItems = _mapper.Map<OrderItemModel[]>(results);
 
                 return Ok(allOrderItems);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("{orderItemId:int}")]
+        public async Task<ActionResult<OrderItemModel>> GetOrderItemById(int orderItemId)
+        {
+            try
+            {
+                var results = await _repository.GetOrderItemById(orderItemId);
+
+                OrderItemModel orderItem = _mapper.Map<OrderItemModel>(results);
+
+                return Ok(orderItem);
             }
             catch (Exception ex)
             {

@@ -10,10 +10,12 @@ namespace Shop_API.Data.Mapping
         {
             this.CreateMap<Order, OrderModel>()
                 .ForMember(o => o.OrderId, ex => ex.MapFrom(o => o.Id))
-                .ReverseMap();
+                .ReverseMap()
+                .ForAllMembers(opt => opt.Condition(src => src != null));
 
             this.CreateMap<OrderItem, OrderItemModel>()
-                .ReverseMap();
+                .ReverseMap()
+                .ForAllMembers(opt => opt.Condition(src => src != null));
         }
     }
 }
