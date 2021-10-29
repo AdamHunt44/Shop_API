@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shop_API.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,5 +20,8 @@ namespace Shop_API.Model
 
         public string ProductCategory { get; set; }
         public string ProductName { get; set; }
+
+        public int OrderID { get; set; }
+        public Order Order { get; set; }
     }
 }
