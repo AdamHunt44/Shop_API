@@ -28,7 +28,7 @@ namespace Shop_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<OrderModel[]>> GetAllOrders(bool includeItems = true)
+        public async Task<ActionResult<OrderModel[]>> GetAllOrders(bool includeItems = false)
         {
             try
             {

@@ -22,6 +22,5 @@ namespace Shop_API.Model
         public string ProductName { get; set; }
 
         public int OrderID { get; set; }
-        public Order Order { get; set; }
     }
 }

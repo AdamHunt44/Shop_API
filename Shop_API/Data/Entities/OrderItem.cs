@@ -15,7 +15,5 @@ namespace Shop_API.Data.Entities
         public decimal UnitPrice { get; set; }
 
         public int OrderId { get; set; }
-
-        public Order Order { get; set; }
     }
 }
