@@ -11,7 +11,7 @@ namespace Shop_API.Data
         Task<bool> SaveChangesAsync();
 
         // Orders
-        Task<Order[]> GetAllOrders(bool includeItems);
+        Task<Order[]> GetAllOrders();
         Task<Order> GetOrderById(int orderId);
         Task<Order> GetOrderByOrderNumber(string orderNumber);
 

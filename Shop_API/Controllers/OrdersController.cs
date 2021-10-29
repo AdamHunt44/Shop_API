@@ -28,11 +28,11 @@ namespace Shop_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<OrderModel[]>> GetAllOrders(bool includeItems = false)
+        public async Task<ActionResult<OrderModel[]>> GetAllOrders()
         {
             try
             {
-                var results = await _repository.GetAllOrders(includeItems);
+                var results = await _repository.GetAllOrders();
 
                 OrderModel[] allOrders = _mapper.Map<OrderModel[]>(results);
 

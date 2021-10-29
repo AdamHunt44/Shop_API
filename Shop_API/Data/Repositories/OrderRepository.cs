@@ -36,22 +36,13 @@ namespace Shop_API.Data
             return (await _context.SaveChangesAsync()) > 0;
         }
 
-        public async Task<Order[]> GetAllOrders(bool includeItems)
+        public async Task<Order[]> GetAllOrders()
         {
             var context = _context.Orders.Include(i => i.Items);
-            if (includeItems)
-            {
-                context.Include(i => i.Items);
-            }
             IQueryable<Order> query = context;
 
             // Order the Query
             query = query.OrderBy(c => c.Id);
-
-            if (includeItems)
-            {
-                query.Include(i => i.Items);
-            }
 
             return await query.ToArrayAsync();
         }
