@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Shop_API.Controllers
 {
-    [Route("/api/orders/{orderid}/items")]
-    [Route("/api/items/{itemId}")]
-    [Route("/api/items")]
+    [Route("api/orders/{orderId}/items")]
+    [Route("api/items/orders/{orderId}")]
+    [Route("api/all_items/")]
     [ApiController]
     public class OrderItemsController : ControllerBase
     {
@@ -53,6 +53,24 @@ namespace Shop_API.Controllers
                 OrderItemModel orderItem = _mapper.Map<OrderItemModel>(results);
 
                 return Ok(orderItem);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("/items/orders/{orderId:int}")]
+        public async Task<ActionResult<OrderItemModel[]>> GetAllItemsByOrderId(int orderId)
+        {
+            try
+            {
+                var results = await _repository.GetAllItemsByOrderId(orderId);
+
+                OrderItemModel[] allOrderItems = _mapper.Map<OrderItemModel[]>(results);
+
+                return Ok(allOrderItems);
             }
             catch (Exception ex)
             {
