@@ -85,5 +85,16 @@ namespace Shop_API.Data
 
             return await query.FirstOrDefaultAsync();
         }
+
+        public async Task<OrderItem[]> GetAllItemsByOrderId(int orderId)
+        {
+            IQueryable<OrderItem> query = _context.Items;
+
+            // Order the Query
+            query = query.OrderBy(c => c.Id)
+                .Where(i => i.Id == orderId);
+
+            return await query.ToArrayAsync();
+        }
     }
 }
