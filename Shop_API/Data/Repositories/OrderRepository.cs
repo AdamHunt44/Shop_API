@@ -81,7 +81,7 @@ namespace Shop_API.Data
 
             // Order the Query
             query = query.OrderBy(c => c.Id)
-                .Where(i => i.OrderId == orderItemId);
+                .Where(i => i.Id == orderItemId);
 
             return await query.FirstOrDefaultAsync();
         }
